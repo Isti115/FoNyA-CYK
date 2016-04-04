@@ -5,11 +5,24 @@
     <title>FoNyA-CYK</title>
     
     <link rel="stylesheet" href="styles/styles.css" charset="utf-8" />
+    
+    <link rel="import" href="bower_components/webcomponentsjs/webcomponents-lite.min.js" charset="utf-8">
+    <link rel="import" href="bower_components/polymer/polymer-micro.html" charset="utf-8">
+    
+    <link rel="import" href="bower_components/paper-input/paper-input.html" charset="utf-8">
+    <link rel="import" href="bower_components/paper-input/paper-textarea.html" charset="utf-8">
+    <link rel="import" href="bower_components/paper-button/paper-button.html" charset="utf-8">
+    
     <script src="scripts/normalForm.js" charset="utf-8"></script>
     <script src="scripts/CYK.js" charset="utf-8"></script>
     <script src="scripts/scripts.js" charset="utf-8"></script>
   </head>
   <body>
-    
+    <template id="mainContainer" is="dom-bind">
+      <paper-textarea id="rulesInput" label="Rules:" value="{{rulesValue}}">
+      
+      </paper-textarea>
+      <paper-button id="submitButton" label="Submit">Submit</paper-button>
+    </template>
   </body>
 </html>
