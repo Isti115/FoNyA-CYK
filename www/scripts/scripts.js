@@ -5,8 +5,6 @@ var mainContainer;
 function init() {
   mainContainer = document.getElementById("mainContainer");
   mainContainer.addEventListener("dom-change", ready, false);
-  
-  hello();
 }
 
 function ready() {
@@ -14,9 +12,21 @@ function ready() {
 }
 
 function validate() {
-  console.log(mainContainer.rulesValue);
+  console.log(parseRules(mainContainer.rulesValue));
 }
 
-function hello() {
-  return ("Hello World!");
+function parseRules(input) {
+  var ruleSet = [];
+  
+  var splittedInput = input.split("\n");
+  var rulePattern = /^\s*(.*?)\s*->\s*(.*?)\s*$/;
+  
+  for (var rule of splittedInput) {
+    if (!(/^\s*$/).test(rule)) {
+      var [, from, to] = rulePattern.exec(rule);
+      ruleSet.push({"from": from, "to": to});
+    }
+  }
+  
+  return ruleSet;
 }
