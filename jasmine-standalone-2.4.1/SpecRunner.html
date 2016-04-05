@@ -12,14 +12,19 @@
   <script src="lib/jasmine-2.4.1/boot.js"></script>
 
   <!-- include source files here... -->
-  <script src="../www/scripts/normalForm.js"></script>
-  <script src="../www/scripts/CYK.js"></script>
-  <script src="../www/scripts/scripts.js"></script>
+  <script src="../www/scripts/rule.js" charset="utf-8"></script>
+  <script src="../www/scripts/normalForm.js" charset="utf-8"></script>
+  <script src="../www/scripts/CYK.js" charset="utf-8"></script>
+  <script src="../www/scripts/scripts.js" charset="utf-8"></script>
+  
+  <script type="text/javascript">
+    window.removeEventListener("load", init, false);
+  </script>
 
   <!-- include spec files here... -->
-  <script src="spec/normalFormSpec.js"></script>
-  <script src="spec/CYKSpec.js"></script>
-  <script src="spec/scriptsSpec.js"></script>
+  <script src="spec/normalFormSpec.js" charset="utf-8"></script>
+  <script src="spec/CYKSpec.js" charset="utf-8"></script>
+  <script src="spec/scriptsSpec.js" charset="utf-8"></script>
 
 </head>
 

@@ -1,6 +1,8 @@
+/* global Rule */
+
 window.addEventListener("load", init, false);
 
-var mainContainer;
+let mainContainer;
 
 function init() {
   mainContainer = document.getElementById("mainContainer");
@@ -16,15 +18,21 @@ function validate() {
 }
 
 function parseRules(input) {
-  var ruleSet = [];
+  let ruleSet = [];
   
-  var splittedInput = input.split("\n");
-  var rulePattern = /^\s*(.*?)\s*->\s*(.*?)\s*$/;
+  let splittedInput = input.split("\n");
+  let emptyPattern = /^\s*$/;
+  let rulePattern = /^\s*(.*?)\s*->\s*(.*?)\s*$/;
+  let rightSidePattern = /\|?(.+?)(?=\||$)/g;
   
-  for (var rule of splittedInput) {
-    if (!(/^\s*$/).test(rule)) {
-      var [, from, to] = rulePattern.exec(rule);
-      ruleSet.push({"from": from, "to": to});
+  for (let rule of splittedInput) {
+    if (!emptyPattern.test(rule)) {
+      let [, leftSide, rightSide] = rulePattern.exec(rule);
+      
+      let match;
+      while ((match = rightSidePattern.exec(rightSide)) !== null) {
+        ruleSet.push(new Rule(leftSide, match[1]));
+      }
     }
   }
   
