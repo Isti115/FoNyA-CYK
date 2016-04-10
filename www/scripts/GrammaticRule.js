@@ -35,4 +35,22 @@ class GrammaticRule {
     
     return ruleSet;
   }
+  
+  toHTML() {
+    let ruleSpan = document.createElement("span");
+    ruleSpan.classList.add("grammatic-rule");
+    
+    for (let i = 0; i < this.leftSide.length; i++) {
+      ruleSpan.appendChild(this.leftSide[i].toHTML());
+    }
+    
+    let arrowText = document.createTextNode(" -> ");
+    ruleSpan.appendChild(arrowText);
+    
+    for (let i = 0; i < this.rightSide.length; i++) {
+      ruleSpan.appendChild(this.rightSide[i].toHTML());
+    }
+    
+    return ruleSpan;
+  }
 }

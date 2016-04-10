@@ -1,0 +1,18 @@
+@import "fonts.css";
+
+/*html, body {
+  font-family: "Roboto", "Noto", sans-serif;
+}*/
+
+/*#rulesInput {
+  font-family: "Roboto Mono";
+}*/
+
+.rule-set {
+  /*font-family: "Roboto Mono";*/
+  font-family: "Consolas";
+}
+
+.grammatic-rule {
+  display: block;
+}

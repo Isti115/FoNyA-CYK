@@ -15,8 +15,20 @@ function ready() {
 
 function validate() {
   console.log(parseRules(mainContainer.rulesValue));
+  prettyPrintRules(GrammaticRule.listFromString(mainContainer.rulesValue));
 }
 
 function parseRules(input) {
   return GrammaticRule.listFromString(input);
+}
+
+function prettyPrintRules(rules) {
+  let rulesP = document.createElement("p");
+  rulesP.classList.add("rule-set");
+  
+  for (let i = 0; i < rules.length; i++) {
+    rulesP.appendChild(rules[i].toHTML());
+  }
+  
+  document.body.appendChild(rulesP);
 }
