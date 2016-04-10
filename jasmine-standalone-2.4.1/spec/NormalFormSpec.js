@@ -1,18 +1,18 @@
 /* global GrammaticRule NormalForm */
 
-xdescribe("NormalForm", () => {
+describe("NormalForm", () => {
   it("should reduce a grammar", () => {
-    expect(NormalForm.reduce(GrammaticRule.listFromString(`
-      S -> AS|SB|a
-      A -> BC|a
-      B -> AB|CC|b
-      C -> AB|c
-    `))).toEqual(GrammaticRule.listFromString(`
-      S -> AS|SB|a
-      A -> BC|a
-      B -> AB|CC|b
-      C -> AB|c
-    `));
+    // expect(NormalForm.reduce(GrammaticRule.listFromString(`
+    //   S -> AS|SB|a
+    //   A -> BC|a
+    //   B -> AB|CC|b
+    //   C -> AB|c
+    // `))).toEqual(GrammaticRule.listFromString(`
+    //   S -> AS|SB|a
+    //   A -> BC|a
+    //   B -> AB|CC|b
+    //   C -> AB|c
+    // `));
     
     expect(NormalForm.reduce(GrammaticRule.listFromString(`
       S -> bCB|bBB|abD

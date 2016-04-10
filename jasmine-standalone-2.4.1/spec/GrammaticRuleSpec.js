@@ -1,4 +1,4 @@
-/* global GrammaticSymbol GrammaticRule */
+/* global GrammaticWord GrammaticRule */
 
 describe("GrammaticRule", () => {
   it("should make a rule out of a string", () => {
@@ -6,8 +6,8 @@ describe("GrammaticRule", () => {
       "A", "a"
     )).toEqual(
       new GrammaticRule(
-        GrammaticSymbol.listFromString("A"),
-        GrammaticSymbol.listFromString("a")
+        GrammaticWord.fromString("A"),
+        GrammaticWord.fromString("a")
       )
     );
     
@@ -15,8 +15,8 @@ describe("GrammaticRule", () => {
       "Be", "oYe"
     )).toEqual(
       new GrammaticRule(
-        GrammaticSymbol.listFromString("Be"),
-        GrammaticSymbol.listFromString("oYe")
+        GrammaticWord.fromString("Be"),
+        GrammaticWord.fromString("oYe")
       )
     );
   });

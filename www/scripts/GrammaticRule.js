@@ -1,5 +1,5 @@
 /* exported GrammaticRule */
-/* global GrammaticSymbol */
+/* global GrammaticWord */
 
 class GrammaticRule {
   constructor(leftSide, rightSide) {
@@ -9,8 +9,8 @@ class GrammaticRule {
   
   static fromStrings(leftSide, rightSide) {
     return new GrammaticRule(
-      GrammaticSymbol.listFromString(leftSide),
-      GrammaticSymbol.listFromString(rightSide)
+      GrammaticWord.fromString(leftSide),
+      GrammaticWord.fromString(rightSide)
     );
   }
   
