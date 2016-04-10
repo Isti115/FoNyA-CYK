@@ -20,7 +20,7 @@ class GrammaticRule {
     let splittedInput = input.split("\n");
     let emptyPattern = /^\s*$/;
     let rulePattern = /^\s*(.*?)\s*->\s*(.*?)\s*$/;
-    let rightSidePattern = /\|?(.+?)(?=\||$)/g;
+    let rightSidePattern = /\|?([^|]+?)(?=\||$)/g;
     
     for (let rule of splittedInput) {
       if (!emptyPattern.test(rule)) {

@@ -6,6 +6,21 @@ class GrammaticSymbol {
     this.sub = sub;
   }
   
+  static equals(a, b) {
+    return (
+      a.base === b.base &&
+      a.sub === b.sub
+    );
+  }
+  
+  equals(other) {
+    return GrammaticSymbol.equals(this, other);
+  }
+  
+  isTerminal() {
+    return this.base === this.base.toLowerCase();
+  }
+  
   static listFromString(input) {
     let result = [];
     

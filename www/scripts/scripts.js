@@ -4,6 +4,8 @@ window.addEventListener("load", init, false);
 
 let mainContainer;
 
+let currentGrammar;
+
 function init() {
   mainContainer = document.getElementById("mainContainer");
   mainContainer.addEventListener("dom-change", ready, false);
@@ -11,11 +13,16 @@ function init() {
 
 function ready() {
   mainContainer.$.submitButton.addEventListener("click", validate, false);
+  mainContainer.rulesValue = `S -> bCB|bBB|abD
+A -> ADb|bD
+C -> bBc|aCB
+D -> DD|Cb|ε`;
 }
 
 function validate() {
-  console.log(parseRules(mainContainer.rulesValue));
-  prettyPrintRules(GrammaticRule.listFromString(mainContainer.rulesValue));
+  currentGrammar = parseRules(mainContainer.rulesValue);
+  console.log(currentGrammar);
+  prettyPrintRules(currentGrammar);
 }
 
 function parseRules(input) {

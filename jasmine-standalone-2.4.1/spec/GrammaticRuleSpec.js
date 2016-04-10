@@ -32,10 +32,10 @@ describe("GrammaticRule", () => {
     
     expect(GrammaticRule.listFromString(`
       S -> Dd
-      D -> e
+      D -> ε
     `)).toEqual([
       GrammaticRule.fromStrings("S", "Dd"),
-      GrammaticRule.fromStrings("D", "e")
+      GrammaticRule.fromStrings("D", "ε")
     ]);
     
     expect(GrammaticRule.listFromString(`
@@ -47,6 +47,16 @@ describe("GrammaticRule", () => {
       GrammaticRule.fromStrings("S", "qC"),
       GrammaticRule.fromStrings("D", "A"),
       GrammaticRule.fromStrings("D", "e")
+    ]);
+    
+    expect(GrammaticRule.listFromString(`
+      C -> bBc|aCB
+      D -> DD|Cb|
+    `)).toEqual([
+      GrammaticRule.fromStrings("C", "bBc"),
+      GrammaticRule.fromStrings("C", "aCB"),
+      GrammaticRule.fromStrings("D", "DD"),
+      GrammaticRule.fromStrings("D", "Cb")
     ]);
   });
 });
