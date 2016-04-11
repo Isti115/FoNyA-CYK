@@ -59,6 +59,9 @@ describe("GrammaticWord", () => {
     expect(GrammaticWord.fromString("Aqf").indexOf(new GrammaticSymbol("f"))).toEqual(2);
     expect(GrammaticWord.fromString("Aqf").indexOf(new GrammaticSymbol("d"))).toEqual(-1);
     
+    expect(GrammaticWord.fromString("XfAqf").indexOf(new GrammaticSymbol("f"), 0)).toEqual(1);
+    expect(GrammaticWord.fromString("XfAqf").indexOf(new GrammaticSymbol("f"), 2)).toEqual(4);
+    
     expect(GrammaticWord.fromString("AW_(1)qf").indexOf(new GrammaticSymbol("W", "1"))).toEqual(1);
     expect(GrammaticWord.fromString("AqW_(1)f").indexOf(new GrammaticSymbol("W", "5"))).toEqual(-1);
     expect(GrammaticWord.fromString("AqW_(5)f").indexOf(new GrammaticSymbol("f", "5"))).toEqual(-1);

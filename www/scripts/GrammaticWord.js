@@ -66,8 +66,8 @@ class GrammaticWord {
     return result;
   }
   
-  indexOf(symbol) {
-    for (let i = 0; i < this.symbols.length; i++) {
+  indexOf(symbol, start = 0) {
+    for (let i = start; i < this.symbols.length; i++) {
       if (symbol.equals(this.symbols[i])) {
         return i;
       }

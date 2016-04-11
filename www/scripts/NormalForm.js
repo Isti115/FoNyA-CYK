@@ -80,7 +80,7 @@ class NormalForm {
     
     return result;
   }
-
+  
   static getNullableSymbols(grammar) {
     let nullableSymbols = [];
     let newEpsilonSymbols = grammar.filter((r) => r.rightSide.symbols[0].base === "ε").map((r) => r.leftSide.symbols[0]);
@@ -102,7 +102,7 @@ class NormalForm {
     
     return nullableSymbols;
   }
-
+  
   static epsilonFree(grammar) {
     let nullableSymbols = NormalForm.getNullableSymbols(grammar);
     
@@ -116,9 +116,13 @@ class NormalForm {
       for (let currentRule of grammar) {
         let index = currentRule.rightSide.indexOf(currentSymbol);
         if (index !== -1 && currentRule.rightSide.symbols.length > 1) {
-          let newRule = currentRule.copy();
-          newRule.rightSide.symbols.splice(index, 1);
-          grammar.push(newRule);
+          while (index !== -1) {
+            let newRule = currentRule.copy();
+            newRule.rightSide.symbols.splice(index, 1);
+            grammar.push(newRule);
+            
+            index = currentRule.rightSide.indexOf(currentSymbol, index + 1);
+          }
         }
       }
     }
@@ -126,10 +130,52 @@ class NormalForm {
     GrammaticRule.sort(grammar);
     
     for (let i = 0; i < grammar.length - 1; i++) {
-      while (grammar[i].equals(grammar[i + 1])) {
+      while ((i + 1) < grammar.length && grammar[i].equals(grammar[i + 1])) {
         grammar.splice(i, 1);
       }
     }
+    
+    return grammar;
+  }
+  
+  static getChainedSymbols(grammar, symbol) {
+    let chainedSymbols = [];
+    let newChainedSymbols = [symbol];
+    
+    while (newChainedSymbols.length > 0) {
+      let currentRules = [];
+      for (let currentSymbol of newChainedSymbols) {
+        currentRules.push(...grammar.filter((r) => r.leftSide.symbols[0].equals(currentSymbol)));
+      }
+      
+      chainedSymbols.push(...newChainedSymbols);
+      newChainedSymbols = [];
+      
+      for (let currentRule of currentRules) {
+        if (currentRule.rightSide.symbols.length === 1) {
+          let currentSymbol = currentRule.rightSide.symbols[0];
+          if (
+            !currentSymbol.isTerminal() &&
+            new GrammaticWord(chainedSymbols).indexOf(currentSymbol) === -1 &&
+            new GrammaticWord(newChainedSymbols).indexOf(currentSymbol) === -1
+          ) {
+            newChainedSymbols.push(currentSymbol);
+          }
+        }
+      }
+    }
+    
+    return chainedSymbols;
+  }
+  
+  static chainFree(grammar) {
+    // let nonTerminals = [];
+    //
+    // for (let currentRule of grammar) {
+      // if (currentRule.leftSide()) {
+        //
+      // }
+    // }
     
     return grammar;
   }
