@@ -35,8 +35,6 @@ class NormalForm {
     let activeSymbols = [];
     let newActiveSymbols = grammar.filter((r) => r.rightSide.isTerminal()).map((r) => r.leftSide.symbols[0]);
     
-    console.log(newActiveSymbols);
-    
     while (newActiveSymbols.length > 0) {
       activeSymbols.push(...newActiveSymbols);
       newActiveSymbols = [];
@@ -81,5 +79,9 @@ class NormalForm {
     );
     
     return result;
+  }
+
+  static epsilonFree(grammar) {
+    return grammar;
   }
 }

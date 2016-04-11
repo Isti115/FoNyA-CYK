@@ -84,4 +84,10 @@ describe("GrammaticWord", () => {
     expect(GrammaticWord.fromString("aAb").getNonTerminals()).toEqual(GrammaticWord.fromString("A").symbols);
     expect(GrammaticWord.fromString("BQ_(4)").getNonTerminals()).toEqual(GrammaticWord.fromString("BQ_(4)").symbols);
   });
+  
+  it("should convert to string", () => {
+    expect(GrammaticWord.fromString("ab").toString()).toEqual("ab");
+    expect(GrammaticWord.fromString("aAb").toString()).toEqual("aAb");
+    expect(GrammaticWord.fromString("BQ_(4)a").toString()).toEqual("BQ_(4)a");
+  });
 });

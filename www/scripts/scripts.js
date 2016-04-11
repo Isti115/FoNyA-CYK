@@ -1,4 +1,4 @@
-/* global GrammaticRule */
+/* global GrammaticRule NormalForm PrettyPrinter */
 
 window.addEventListener("load", init, false);
 
@@ -22,7 +22,7 @@ D -> DD|Cb|ε`;
 function validate() {
   currentGrammar = parseRules(mainContainer.rulesValue);
   console.log(currentGrammar);
-  prettyPrintRules(currentGrammar);
+  prettyPrintRules(NormalForm.reduce(currentGrammar));
 }
 
 function parseRules(input) {
@@ -30,12 +30,7 @@ function parseRules(input) {
 }
 
 function prettyPrintRules(rules) {
-  let rulesP = document.createElement("p");
-  rulesP.classList.add("rule-set");
-  
-  for (let i = 0; i < rules.length; i++) {
-    rulesP.appendChild(rules[i].toHTML());
-  }
+  let rulesP = PrettyPrinter.ruleSetToDenseHTML(rules);
   
   document.body.appendChild(rulesP);
 }

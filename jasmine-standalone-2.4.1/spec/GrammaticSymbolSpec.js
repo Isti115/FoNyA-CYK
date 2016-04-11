@@ -16,4 +16,10 @@ describe("GrammaticSymbol", () => {
     expect(new GrammaticSymbol("a", "4").isTerminal()).toBeTruthy();
     expect(new GrammaticSymbol("A", "4").isTerminal()).toBeFalsy();
   });
+  
+  it("should convert to string", () => {
+    expect(new GrammaticSymbol("A").toString()).toEqual("A");
+    expect(new GrammaticSymbol("Q", "4").toString()).toEqual("Q_(4)");
+    expect(new GrammaticSymbol("a").toString()).toEqual("a");
+  });
 });

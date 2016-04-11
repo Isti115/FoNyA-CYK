@@ -56,4 +56,14 @@ class GrammaticWord {
   getNonTerminals() {
     return this.symbols.filter((s) => !s.isTerminal());
   }
+  
+  toString() {
+    let result = "";
+    
+    for (let currentSymbol of this.symbols) {
+      result += currentSymbol.toString();
+    }
+    
+    return result;
+  }
 }
