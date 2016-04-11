@@ -1,6 +1,26 @@
 /* global GrammaticSymbol GrammaticWord */
 
 describe("GrammaticWord", () => {
+  it("should make a copy", () => {
+    expect(GrammaticWord.fromString("").copy()).toEqual(GrammaticWord.fromString(""));
+    expect(GrammaticWord.fromString("Ad").copy()).toEqual(GrammaticWord.fromString("Ad"));
+    expect(GrammaticWord.fromString("W_(3)bQ_(5)C").copy()).toEqual(GrammaticWord.fromString("W_(3)bQ_(5)C"));
+  });
+  
+  it("should check for equality", () => {
+    expect(GrammaticWord.fromString("S").equals(GrammaticWord.fromString("S"))).toBeTruthy();
+    expect(GrammaticWord.fromString("AQ_(5)").equals(GrammaticWord.fromString("AQ_(5)"))).toBeTruthy();
+    expect(GrammaticWord.fromString("BC").equals(GrammaticWord.fromString("BCA"))).toBeFalsy();
+    expect(GrammaticWord.fromString("ABC").equals(GrammaticWord.fromString("BCA"))).toBeFalsy();
+    expect(GrammaticWord.fromString("AQ_(5)").equals(GrammaticWord.fromString("AQ_(7)"))).toBeFalsy();
+    
+    expect(GrammaticWord.equals(GrammaticWord.fromString("S"), GrammaticWord.fromString("S"))).toBeTruthy();
+    expect(GrammaticWord.equals(GrammaticWord.fromString("AQ_(5)"), GrammaticWord.fromString("AQ_(5)"))).toBeTruthy();
+    expect(GrammaticWord.equals(GrammaticWord.fromString("BC"), GrammaticWord.fromString("BCA"))).toBeFalsy();
+    expect(GrammaticWord.equals(GrammaticWord.fromString("ABC"), GrammaticWord.fromString("BCA"))).toBeFalsy();
+    expect(GrammaticWord.equals(GrammaticWord.fromString("AQ_(5)"), GrammaticWord.fromString("AQ_(7)"))).toBeFalsy();
+  });
+  
   it("should create a word from a string", () => {
     expect(GrammaticWord.fromString(
       ""

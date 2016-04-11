@@ -26,17 +26,17 @@ describe("NormalForm", () => {
     `));
   });
   
-  xit("should epsilon free a grammar", () => {
+  it("should epsilon free a grammar", () => {
     expect(NormalForm.epsilonFree(GrammaticRule.listFromString(`
-      S -> ACA
-      A -> aAa|B|C
-      B -> bB|b
-      C -> cC|ε
-    `))).toEqual(GrammaticRule.listFromString(`
-      S -> A|C|AC|CA|ACA
-      A -> A|B|C
-      B -> bB|b
-      C -> cC|ε
-    `));
+      S -> AbB|C
+      B -> AA|AC
+      C -> b|c
+      A -> a|ε
+    `))).toEqual(GrammaticRule.sort(GrammaticRule.listFromString(`
+      S -> AbB|Ab|bB|b|C
+      B -> AA|A|AC|C
+      C -> b|c
+      A -> a
+    `)));
   });
 });

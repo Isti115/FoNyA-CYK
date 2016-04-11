@@ -6,6 +6,13 @@ class GrammaticSymbol {
     this.sub = sub;
   }
   
+  copy() {
+    return new GrammaticSymbol(
+      this.base,
+      this.sub
+    );
+  }
+  
   static equals(a, b) {
     return (
       a.base === b.base &&

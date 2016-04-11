@@ -7,6 +7,38 @@ class GrammaticRule {
     this.rightSide = rightSide;
   }
   
+  copy() {
+    return new GrammaticRule(this.leftSide.copy(), this.rightSide.copy());
+  }
+  
+  static equals(a, b) {
+    if (!GrammaticWord.equals(a.leftSide, b.leftSide)) {
+      return false;
+    }
+    
+    if (!GrammaticWord.equals(a.rightSide, b.rightSide)) {
+      return false;
+    }
+    
+    return true;
+  }
+  
+  equals(other) {
+    return GrammaticRule.equals(this, other);
+  }
+  
+  // compare(other) {
+  //   let result;
+  //
+  //   if ((result = this.leftSide.compare(other.leftSide)) !== 0) {
+  //     return result;
+  //   } else if ((result = this.rightSide.compare(other.rightSide)) !== 0) {
+  //     return result;
+  //   }
+  //
+  //   return 0;
+  // }
+  
   static fromStrings(leftSide, rightSide) {
     return new GrammaticRule(
       GrammaticWord.fromString(leftSide),
@@ -34,5 +66,24 @@ class GrammaticRule {
     }
     
     return ruleSet;
+  }
+  
+  toString() {
+    return `${this.leftSide.toString()} -> ${this.rightSide.toString()}`;
+  }
+  
+  static sort(grammar) {
+    grammar.sort((a, b) => {
+      if (a.toString() > b.toString()) {
+        return 1;
+      }
+      if (a.toString() < b.toString()) {
+        return -1;
+      }
+      
+      return 0;
+    });
+    
+    return grammar;
   }
 }

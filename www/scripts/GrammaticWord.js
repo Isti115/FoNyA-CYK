@@ -6,6 +6,49 @@ class GrammaticWord {
     this.symbols = symbols;
   }
   
+  copy() {
+    let other = new GrammaticWord();
+    
+    for (let currentSymbol of this.symbols) {
+      other.symbols.push(currentSymbol.copy());
+    }
+    
+    return other;
+  }
+  
+  static equals(a, b) {
+    if (a.symbols.length !== b.symbols.length) {
+      return false;
+    }
+    
+    for (let i = 0; i < a.symbols.length; i++) {
+      if (!GrammaticSymbol.equals(a.symbols[i], b.symbols[i])) {
+        return false;
+      }
+    }
+    
+    return true;
+  }
+  
+  equals(other) {
+    return GrammaticWord.equals(this, other);
+  }
+  
+  // compare(other) {
+  //   let result;
+  //
+  //   for (let i = 0; i < this.symbols.length; i++) {
+  //     if (true) {
+  //
+  //     }
+  //     if ((result = this.symbols[i].compare(other.symbols[i])) !== 0) {
+  //       return result;
+  //     }
+  //   }
+  //
+  //   return 0;
+  // }
+  
   static fromString(input) {
     let result = new GrammaticWord();
     

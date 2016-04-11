@@ -21,8 +21,9 @@ D -> DD|Cb|ε`;
 
 function validate() {
   currentGrammar = parseRules(mainContainer.rulesValue);
-  console.log(currentGrammar);
-  prettyPrintRules(NormalForm.reduce(currentGrammar));
+  // console.log(currentGrammar);
+  // prettyPrintRules(NormalForm.reduce(currentGrammar));
+  prettyPrintRules(NormalForm.epsilonFree(currentGrammar));
 }
 
 function parseRules(input) {

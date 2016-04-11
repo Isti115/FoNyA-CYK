@@ -1,6 +1,27 @@
 /* global GrammaticWord GrammaticRule */
 
 describe("GrammaticRule", () => {
+  it("should make a copy", () => {
+    expect(GrammaticRule.fromStrings("S", "AbB").copy()).toEqual(GrammaticRule.fromStrings("S", "AbB"));
+    expect(GrammaticRule.fromStrings("W_(3)", "bQ_(5)C").copy()).toEqual(GrammaticRule.fromStrings("W_(3)", "bQ_(5)C"));
+  });
+  
+  it("should check for equality", () => {
+    expect(GrammaticRule.fromStrings("S", "sb").equals(GrammaticRule.fromStrings("S", "sb"))).toBeTruthy();
+    expect(GrammaticRule.fromStrings("W_(a)", "a").equals(GrammaticRule.fromStrings("W_(a)", "a"))).toBeTruthy();
+    expect(GrammaticRule.fromStrings("BC", "qwe").equals(GrammaticRule.fromStrings("BCA", "qwe"))).toBeFalsy();
+    expect(GrammaticRule.fromStrings("BC", "qwe").equals(GrammaticRule.fromStrings("BC", "qwer"))).toBeFalsy();
+    expect(GrammaticRule.fromStrings("X", "Y").equals(GrammaticRule.fromStrings("Y", "X"))).toBeFalsy();
+    expect(GrammaticRule.fromStrings("W_(5)", "W_(4)").equals(GrammaticRule.fromStrings("W_(5)", "a_(4)"))).toBeFalsy();
+    
+    expect(GrammaticRule.equals(GrammaticRule.fromStrings("S", "sb"), GrammaticRule.fromStrings("S", "sb"))).toBeTruthy();
+    expect(GrammaticRule.equals(GrammaticRule.fromStrings("W_(a)", "a"), GrammaticRule.fromStrings("W_(a)", "a"))).toBeTruthy();
+    expect(GrammaticRule.equals(GrammaticRule.fromStrings("BC", "qwe"), GrammaticRule.fromStrings("BCA", "qwe"))).toBeFalsy();
+    expect(GrammaticRule.equals(GrammaticRule.fromStrings("BC", "qwe"), GrammaticRule.fromStrings("BC", "qwer"))).toBeFalsy();
+    expect(GrammaticRule.equals(GrammaticRule.fromStrings("X", "Y"), GrammaticRule.fromStrings("Y", "X"))).toBeFalsy();
+    expect(GrammaticRule.equals(GrammaticRule.fromStrings("W_(5)", "W_(4)"), GrammaticRule.fromStrings("W_(5)", "a_(4)"))).toBeFalsy();
+  });
+  
   it("should make a rule out of a string", () => {
     expect(GrammaticRule.fromStrings(
       "A", "a"
@@ -58,5 +79,10 @@ describe("GrammaticRule", () => {
       GrammaticRule.fromStrings("D", "DD"),
       GrammaticRule.fromStrings("D", "Cb")
     ]);
+  });
+  
+  it("should convert to string", () => {
+    expect(GrammaticRule.fromStrings("S", "AbB").toString()).toEqual("S -> AbB");
+    expect(GrammaticRule.fromStrings("W_(3)", "bQ_(5)C").toString()).toEqual("W_(3) -> bQ_(5)C");
   });
 });

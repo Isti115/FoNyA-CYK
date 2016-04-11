@@ -1,5 +1,5 @@
 /* exported NormalForm */
-/* global GrammaticWord */
+/* global GrammaticRule GrammaticWord */
 
 class NormalForm {
   static getReachableSymbols(grammar) {
@@ -81,7 +81,56 @@ class NormalForm {
     return result;
   }
 
+  static getNullableSymbols(grammar) {
+    let nullableSymbols = [];
+    let newEpsilonSymbols = grammar.filter((r) => r.rightSide.symbols[0].base === "ε").map((r) => r.leftSide.symbols[0]);
+    
+    while (newEpsilonSymbols.length > 0) {
+      nullableSymbols.push(...newEpsilonSymbols);
+      newEpsilonSymbols = [];
+      
+      for (let currentRule of grammar) {
+        if (
+          currentRule.rightSide.containsOnly(new GrammaticWord(nullableSymbols)) &&
+          new GrammaticWord(nullableSymbols).indexOf(currentRule.leftSide.symbols[0]) === -1 &&
+          new GrammaticWord(newEpsilonSymbols).indexOf(currentRule.leftSide.symbols[0]) === -1
+        ) {
+          newEpsilonSymbols.push(currentRule.leftSide.symbols[0]);
+        }
+      }
+    }
+    
+    return nullableSymbols;
+  }
+
   static epsilonFree(grammar) {
+    let nullableSymbols = NormalForm.getNullableSymbols(grammar);
+    
+    for (let i = 0; i < grammar.length; i++) {
+      if (grammar[i].rightSide.symbols[0].base === "ε") {
+        grammar.splice(i, 1);
+      }
+    }
+    
+    for (let currentSymbol of nullableSymbols) {
+      for (let currentRule of grammar) {
+        let index = currentRule.rightSide.indexOf(currentSymbol);
+        if (index !== -1 && currentRule.rightSide.symbols.length > 1) {
+          let newRule = currentRule.copy();
+          newRule.rightSide.symbols.splice(index, 1);
+          grammar.push(newRule);
+        }
+      }
+    }
+    
+    GrammaticRule.sort(grammar);
+    
+    for (let i = 0; i < grammar.length - 1; i++) {
+      while (grammar[i].equals(grammar[i + 1])) {
+        grammar.splice(i, 1);
+      }
+    }
+    
     return grammar;
   }
 }
