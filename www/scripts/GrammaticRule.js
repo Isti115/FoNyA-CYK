@@ -27,18 +27,6 @@ class GrammaticRule {
     return GrammaticRule.equals(this, other);
   }
   
-  // compare(other) {
-  //   let result;
-  //
-  //   if ((result = this.leftSide.compare(other.leftSide)) !== 0) {
-  //     return result;
-  //   } else if ((result = this.rightSide.compare(other.rightSide)) !== 0) {
-  //     return result;
-  //   }
-  //
-  //   return 0;
-  // }
-  
   static fromStrings(leftSide, rightSide) {
     return new GrammaticRule(
       GrammaticWord.fromString(leftSide),

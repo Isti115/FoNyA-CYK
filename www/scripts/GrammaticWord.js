@@ -34,20 +34,11 @@ class GrammaticWord {
     return GrammaticWord.equals(this, other);
   }
   
-  // compare(other) {
-  //   let result;
-  //
-  //   for (let i = 0; i < this.symbols.length; i++) {
-  //     if (true) {
-  //
-  //     }
-  //     if ((result = this.symbols[i].compare(other.symbols[i])) !== 0) {
-  //       return result;
-  //     }
-  //   }
-  //
-  //   return 0;
-  // }
+  // TODO: Change every "symbol.length" to simply "length"
+  
+  get length() {
+    return this.symbols.length;
+  }
   
   static fromString(input) {
     let result = new GrammaticWord();

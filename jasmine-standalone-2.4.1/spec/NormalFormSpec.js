@@ -93,4 +93,21 @@ describe("NormalForm", () => {
       C -> a
     `)));
   });
+  
+  it("should add fake non-terminals to a grammar", () => {
+    expect(NormalForm.fakeNonTerminals(GrammaticRule.listFromString(`
+      S -> aABC|a
+      A -> aA|a
+      B -> bcB|bc
+      C -> cC|c
+    `))).toEqual(GrammaticRule.sort(GrammaticRule.listFromString(`
+      S -> Q_(a)ABC|a
+      A -> Q_(a)A|a
+      B -> Q_(b)Q_(c)B|Q_(b)Q_(c)
+      C -> Q_(c)C|c
+      Q_(a) -> a
+      Q_(b) -> b
+      Q_(c) -> c
+    `)));
+  });
 });

@@ -1,5 +1,5 @@
 /* exported NormalForm */
-/* global GrammaticRule GrammaticWord */
+/* global GrammaticSymbol GrammaticWord GrammaticRule */
 
 class NormalForm {
   static getReachableSymbols(grammar) {
@@ -58,7 +58,7 @@ class NormalForm {
   static reduce(grammar) {
     let reachableSymbols = NormalForm.getReachableSymbols(grammar);
     let activeSymbols = NormalForm.getActiveSymbols(grammar);
-      
+    
     let reachableSymbolsWord = new GrammaticWord(reachableSymbols);
     let activeSymbolsWord = new GrammaticWord(activeSymbols);
     
@@ -202,6 +202,35 @@ class NormalForm {
     
     GrammaticRule.sort(grammar);
     GrammaticRule.clean(grammar);
+    
+    return grammar;
+  }
+  
+  static fakeNonTerminals(grammar) {
+    let terminalsToFake = [];
+    
+    let longerRules = grammar.filter((r) => r.rightSide.length > 1);
+    for (let currentRule of longerRules) {
+      for (let i = 0; i < currentRule.rightSide.length; i++) {
+        if (currentRule.rightSide.symbols[i].isTerminal()) {
+          if (new GrammaticWord(terminalsToFake).indexOf(currentRule.rightSide.symbols[i]) === -1) {
+            terminalsToFake.push(currentRule.rightSide.symbols[i]);
+          }
+          
+          currentRule.rightSide.symbols[i] = new GrammaticSymbol("Q", currentRule.rightSide.symbols[i].base);
+        }
+      }
+    }
+    
+    for (let currentTerminalToFake of terminalsToFake) {
+      grammar.push(new GrammaticRule(
+        new GrammaticWord([new GrammaticSymbol("Q", currentTerminalToFake.base)]),
+        new GrammaticWord([new GrammaticSymbol(currentTerminalToFake.base)])
+      ));
+    }
+    
+    GrammaticRule.sort(grammar);
+    // GrammaticRule.clean(grammar);
     
     return grammar;
   }
