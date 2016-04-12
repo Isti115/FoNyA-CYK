@@ -110,4 +110,29 @@ describe("NormalForm", () => {
       Q_(c) -> c
     `)));
   });
+  
+  it("should perform lengthreduction on a grammar", () => {
+    for (let i = 0; i < 14; i++) {
+      expect(NormalForm.lengthReduce(GrammaticRule.listFromString(`
+        S -> Q_(a)ABC|a
+        A -> Q_(a)A|a
+        B -> Q_(b)Q_(c)B|Q_(b)Q_(c)
+        C -> Q_(c)C|c
+        Q_(a) -> a
+        Q_(b) -> b
+        Q_(c) -> c
+      `))[i]).toEqual(GrammaticRule.sort(GrammaticRule.listFromString(`
+        S -> Q_(a)W_(2)|a
+        A -> Q_(a)A|a
+        B -> Q_(b)W_(3)|Q_(b)Q_(c)
+        C -> Q_(c)C|c
+        Q_(a) -> a
+        Q_(b) -> b
+        Q_(c) -> c
+        W_(1) -> BC
+        W_(2) -> AW_(1)
+        W_(3) -> Q_(c)B
+      `))[i]);
+    }
+  });
 });

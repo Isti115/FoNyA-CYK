@@ -234,4 +234,38 @@ class NormalForm {
     
     return grammar;
   }
+
+  static lengthReduce(grammar) {
+    let index = 1;
+    
+    let addedRules = [];
+    
+    let longerRules = grammar.filter((r) => r.rightSide.length > 2);
+    for (let i = 0; i < longerRules.length; i++) {
+      while (longerRules[i].rightSide.length > 2) {
+        let ending = new GrammaticWord(longerRules[i].rightSide.symbols.slice(
+          longerRules[i].rightSide.symbols.length - 2,
+          longerRules[i].rightSide.symbols.length
+        ));
+        
+        let existing = addedRules.filter((r) => r.rightSide.equals(ending));
+        
+        if (existing.length > 0) {
+          longerRules[i].rightSide.symbols.splice(
+            longerRules[i].rightSide.symbols.length - 2, 2,
+            existing[0].leftSide.symbols[0].copy()
+          );
+        } else {
+          let newSymbol = new GrammaticSymbol("W", String(index++));
+          
+          longerRules[i].rightSide.symbols.splice(longerRules[i].rightSide.symbols.length - 2, 2, newSymbol);
+          grammar.push(new GrammaticRule(new GrammaticWord([newSymbol.copy()]), ending));
+        }
+      }
+    }
+    
+    GrammaticRule.sort(grammar);
+    
+    return grammar;
+  }
 }
