@@ -23,7 +23,7 @@ function validate() {
   currentGrammar = parseRules(mainContainer.rulesValue);
   // console.log(currentGrammar);
   // prettyPrintRules(NormalForm.reduce(currentGrammar));
-  prettyPrintRules(NormalForm.epsilonFree(currentGrammar));
+  prettyPrintRules(NormalForm.chainFree(currentGrammar));
 }
 
 function parseRules(input) {

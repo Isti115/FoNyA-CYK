@@ -129,11 +129,7 @@ class NormalForm {
     
     GrammaticRule.sort(grammar);
     
-    for (let i = 0; i < grammar.length - 1; i++) {
-      while ((i + 1) < grammar.length && grammar[i].equals(grammar[i + 1])) {
-        grammar.splice(i, 1);
-      }
-    }
+    GrammaticRule.clean(grammar);
     
     return grammar;
   }
@@ -169,13 +165,43 @@ class NormalForm {
   }
   
   static chainFree(grammar) {
-    // let nonTerminals = [];
-    //
-    // for (let currentRule of grammar) {
-      // if (currentRule.leftSide()) {
-        //
-      // }
-    // }
+    let nonTerminals = [];
+    
+    for (let currentRule of grammar) {
+      if (
+        !currentRule.leftSide.symbols[0].isTerminal() &&
+        new GrammaticWord(nonTerminals).indexOf(currentRule.leftSide.symbols[0]) === -1
+      ) {
+        nonTerminals.push(currentRule.leftSide.symbols[0]);
+      }
+    }
+    
+    for (let currentNonTerminal of nonTerminals) {
+      let chainedSymbols = NormalForm.getChainedSymbols(grammar, currentNonTerminal);
+      
+      for (let currentChainedSymbol of chainedSymbols) {
+        let currentRules = grammar.filter((r) => r.leftSide.symbols[0].equals(currentChainedSymbol));
+        for (let currentRule of currentRules) {
+          grammar.push(new GrammaticRule(
+            new GrammaticWord([currentNonTerminal.copy()]),
+            currentRule.rightSide.copy()
+          ));
+        }
+      }
+    }
+    
+    for (let i = 0; i < grammar.length; i++) {
+      if (
+        grammar[i].rightSide.symbols.length === 1 &&
+        !grammar[i].rightSide.symbols[0].isTerminal()
+      ) {
+        grammar.splice(i, 1);
+        i--;
+      }
+    }
+    
+    GrammaticRule.sort(grammar);
+    GrammaticRule.clean(grammar);
     
     return grammar;
   }

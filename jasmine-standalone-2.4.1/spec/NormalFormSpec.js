@@ -68,11 +68,29 @@ describe("NormalForm", () => {
     
   });
   
-  xit("should chain free a grammar", () => {
+  it("should chain free a grammar", () => {
     expect(NormalForm.chainFree(GrammaticRule.listFromString(`
-      
+      S -> ACA
+      A -> aAa|B
+      B -> bB|b|C
+      C -> cC|f
     `))).toEqual(GrammaticRule.sort(GrammaticRule.listFromString(`
-      
+      S -> ACA
+      A -> aAa|bB|b|cC|f
+      B -> bB|b|cC|f
+      C -> cC|f
+    `)));
+    
+    expect(NormalForm.chainFree(GrammaticRule.listFromString(`
+      S -> ASB|B
+      A -> Aa|B
+      B -> b|C
+      C -> a
+    `))).toEqual(GrammaticRule.sort(GrammaticRule.listFromString(`
+      S -> ASB|b|a
+      A -> Aa|b|a
+      B -> b|a
+      C -> a
     `)));
   });
 });

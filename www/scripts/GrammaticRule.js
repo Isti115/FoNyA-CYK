@@ -86,4 +86,12 @@ class GrammaticRule {
     
     return grammar;
   }
+  
+  static clean(grammar) {
+    for (let i = 0; i < grammar.length - 1; i++) {
+      while ((i + 1) < grammar.length && grammar[i].equals(grammar[i + 1])) {
+        grammar.splice(i, 1);
+      }
+    }
+  }
 }
