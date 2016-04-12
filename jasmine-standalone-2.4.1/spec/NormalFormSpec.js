@@ -112,27 +112,47 @@ describe("NormalForm", () => {
   });
   
   it("should perform lengthreduction on a grammar", () => {
-    for (let i = 0; i < 14; i++) {
-      expect(NormalForm.lengthReduce(GrammaticRule.listFromString(`
-        S -> Q_(a)ABC|a
-        A -> Q_(a)A|a
-        B -> Q_(b)Q_(c)B|Q_(b)Q_(c)
-        C -> Q_(c)C|c
-        Q_(a) -> a
-        Q_(b) -> b
-        Q_(c) -> c
-      `))[i]).toEqual(GrammaticRule.sort(GrammaticRule.listFromString(`
-        S -> Q_(a)W_(2)|a
-        A -> Q_(a)A|a
-        B -> Q_(b)W_(3)|Q_(b)Q_(c)
-        C -> Q_(c)C|c
-        Q_(a) -> a
-        Q_(b) -> b
-        Q_(c) -> c
-        W_(1) -> BC
-        W_(2) -> AW_(1)
-        W_(3) -> Q_(c)B
-      `))[i]);
-    }
+    expect(NormalForm.lengthReduce(GrammaticRule.listFromString(`
+      S -> Q_(a)ABC|a
+      A -> Q_(a)A|a
+      B -> Q_(b)Q_(c)B|Q_(b)Q_(c)
+      C -> Q_(c)C|c
+      Q_(a) -> a
+      Q_(b) -> b
+      Q_(c) -> c
+    `))).toEqual(GrammaticRule.sort(GrammaticRule.listFromString(`
+      S -> Q_(a)W_(2)|a
+      A -> Q_(a)A|a
+      B -> Q_(b)W_(3)|Q_(b)Q_(c)
+      C -> Q_(c)C|c
+      Q_(a) -> a
+      Q_(b) -> b
+      Q_(c) -> c
+      W_(1) -> BC
+      W_(2) -> AW_(1)
+      W_(3) -> Q_(c)B
+    `)));
+  });
+  
+  it("should convert a grammar to normal form", () => {
+    expect(NormalForm.normalForm(GrammaticRule.listFromString(`
+      S -> aA|bB|ε
+      A -> CACD|ε|BD
+      B -> DD|D
+      C -> a|abA
+      D -> ab|S|ε
+    `))).toEqual(GrammaticRule.sort(GrammaticRule.listFromString(`
+      S -> Q_(a)A|a|Q_(b)B|b
+      A -> CW_(1)|CW_(2)|CW_(3)|CC|BD|DD|Q_(a)Q_(b)|Q_(a)A|a|Q_(b)B|b
+      B -> DD|Q_(a)Q_(b)|Q_(a)A|a|Q_(b)B|b
+      C -> a|Q_(a)W_(4)|Q_(a)Q_(b)
+      D -> Q_(a)Q_(b)|Q_(a)A|a|Q_(b)B|b
+      Q_(a) -> a
+      Q_(b) -> b
+      W_(1) -> AC
+      W_(2) -> CD
+      W_(3) -> AW_(2)
+      W_(4) -> Q_(b)A
+    `)));
   });
 });

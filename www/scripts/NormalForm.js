@@ -230,7 +230,6 @@ class NormalForm {
     }
     
     GrammaticRule.sort(grammar);
-    // GrammaticRule.clean(grammar);
     
     return grammar;
   }
@@ -259,12 +258,25 @@ class NormalForm {
           let newSymbol = new GrammaticSymbol("W", String(index++));
           
           longerRules[i].rightSide.symbols.splice(longerRules[i].rightSide.symbols.length - 2, 2, newSymbol);
-          grammar.push(new GrammaticRule(new GrammaticWord([newSymbol.copy()]), ending));
+          addedRules.push(new GrammaticRule(new GrammaticWord([newSymbol.copy()]), ending));
         }
       }
     }
     
+    grammar.push(...addedRules);
+    
     GrammaticRule.sort(grammar);
+    
+    return grammar;
+  }
+
+  static normalForm(grammar) {
+    NormalForm.reduce(grammar);
+    NormalForm.epsilonFree(grammar);
+    NormalForm.chainFree(grammar);
+    NormalForm.reduce(grammar);
+    NormalForm.fakeNonTerminals(grammar);
+    NormalForm.lengthReduce(grammar);
     
     return grammar;
   }
