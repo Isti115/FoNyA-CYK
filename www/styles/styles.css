@@ -8,6 +8,19 @@
   font-family: "Roboto Mono";
 }*/
 
+#container {
+  width: 50%;
+  
+  min-width: 720px;
+  
+  margin: auto;
+  padding: 10px;
+  
+  border-style: none solid;
+  border-color: black gray;
+  border-width: 0px 1px;
+}
+
 /* PrettyPrinter */
   
   /* NormalForm */
@@ -15,12 +28,52 @@
     .grammatic-rule-set {
       /*font-family: "Roboto Mono";*/
       font-family: "Consolas";
+      
+      /*margin: 0px;*/
     }
 
     .grammatic-rule {
       display: block;
     }
-  
+    
+    .grammar-box {
+      margin: 10px;
+      padding: 10px;
+      
+      border-style: solid;
+      border-color: black;
+      border-width: 1px;
+      
+      box-shadow: 3px 3px 10px 1px black;
+      
+      transition: height 1s;
+      
+      overflow: hidden;
+    }
+    
+    .grammar-box.closed {
+      height: 0px !important;
+    }
+    
+    .toggle {
+      /*margin-top: -12px;*/
+      margin-bottom: 2px;
+      
+      cursor: pointer;
+    }
+    
+    .toggle::after {
+      display: inline-block;
+      
+      content: "▲";
+      transition: all 1s;
+    }
+    
+    .toggle.closed::after {
+      /*content: " < ";*/
+      
+      transform: rotate(180deg);
+    }
   
   /* CYK */
   
