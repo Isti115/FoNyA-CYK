@@ -209,9 +209,9 @@ class NormalForm {
   static fakeNonTerminals(grammar) {
     let terminalsToFake = [];
     
-    let longerRules = grammar.filter((r) => r.rightSide.length > 1);
+    let longerRules = grammar.filter((r) => r.rightSide.symbols.length > 1);
     for (let currentRule of longerRules) {
-      for (let i = 0; i < currentRule.rightSide.length; i++) {
+      for (let i = 0; i < currentRule.rightSide.symbols.length; i++) {
         if (currentRule.rightSide.symbols[i].isTerminal()) {
           if (new GrammaticWord(terminalsToFake).indexOf(currentRule.rightSide.symbols[i]) === -1) {
             terminalsToFake.push(currentRule.rightSide.symbols[i]);
@@ -239,9 +239,9 @@ class NormalForm {
     
     let addedRules = [];
     
-    let longerRules = grammar.filter((r) => r.rightSide.length > 2);
+    let longerRules = grammar.filter((r) => r.rightSide.symbols.length > 2);
     for (let i = 0; i < longerRules.length; i++) {
-      while (longerRules[i].rightSide.length > 2) {
+      while (longerRules[i].rightSide.symbols.length > 2) {
         let ending = new GrammaticWord(longerRules[i].rightSide.symbols.slice(
           longerRules[i].rightSide.symbols.length - 2,
           longerRules[i].rightSide.symbols.length
