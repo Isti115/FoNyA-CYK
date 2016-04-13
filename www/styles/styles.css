@@ -8,11 +8,43 @@
   font-family: "Roboto Mono";
 }*/
 
-.grammatic-rule-set {
-  /*font-family: "Roboto Mono";*/
-  font-family: "Consolas";
-}
+/* PrettyPrinter */
+  
+  /* NormalForm */
+  
+    .grammatic-rule-set {
+      /*font-family: "Roboto Mono";*/
+      font-family: "Consolas";
+    }
 
-.grammatic-rule {
-  display: block;
-}
+    .grammatic-rule {
+      display: block;
+    }
+  
+  
+  /* CYK */
+  
+    .CYK-pyramid {
+      text-align: center;
+    }
+    
+    .CYK-pyramid-level {
+      
+    }
+    
+    .CYK-cell {
+      display: inline-block;
+
+      margin: 3px;
+
+      width: 50px;
+    }
+    
+    .CYK-pyramid-cell {
+      border: solid black 1px;
+    }
+    
+    .CYK-word-cell {
+      border: solid grey 1px;
+    }
+  

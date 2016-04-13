@@ -1,4 +1,4 @@
-/* global GrammaticRule CYK */
+/* global GrammaticSymbol GrammaticRule CYK */
 
 describe("CYK", () => {
   it("should check the deductibility of a word", () => {
@@ -7,6 +7,6 @@ describe("CYK", () => {
       A -> BC|a
       B -> AB|CC|b
       C -> AB|c
-    `), "aabbcc")).toBeTruthy();
+    `), new GrammaticSymbol("S"), "aabbcc")).toBeTruthy();
   });
 });

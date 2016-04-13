@@ -1,4 +1,4 @@
-/* global GrammaticRule NormalForm PrettyPrinter */
+/* global GrammaticSymbol GrammaticRule NormalForm CYK PrettyPrinter */
 
 window.addEventListener("load", init, false);
 
@@ -24,6 +24,24 @@ function validate() {
   // console.log(currentGrammar);
   // prettyPrintRules(NormalForm.reduce(currentGrammar));
   prettyPrintRules(NormalForm.normalForm(currentGrammar));
+  
+  let word = "aabbcc";
+  
+  let pyramid = [];
+  CYK.checkDeductibility(GrammaticRule.listFromString(`
+    S -> AS|SB|a
+    A -> BC|a
+    B -> AB|CC|b
+    C -> AB|c
+  `), new GrammaticSymbol("S"), word, pyramid);
+  
+  // for (let i = 0; i < pyramid.length; i++) {
+  //   console.log(pyramid[pyramid.length - 1 - i].map((c) => c.toString()));
+  // }
+  // console.log(pyramid);
+  
+  let pyramidDiv = PrettyPrinter.pyramidToHtml(pyramid, word);
+  document.body.appendChild(pyramidDiv);
 }
 
 function parseRules(input) {

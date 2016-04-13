@@ -31,8 +31,8 @@ class CYK {
     return result;
   }
   
-  static checkDeductibility(grammar, word) {
-    let pyramid = [];
+  static checkDeductibility(grammar, startSymbol, word, pyramid = []) {
+    // let pyramid = [];
     let level = 0;
     
     pyramid[level] = [];
@@ -59,11 +59,6 @@ class CYK {
       level++;
     }
     
-    for (let i = 0; i < pyramid.length; i++) {
-      console.log(pyramid[pyramid.length - 1 - i].map((c) => c.toString()));
-    }
-    console.log(pyramid);
-    
-    return false;
+    return (new GrammaticWord(pyramid[pyramid.length - 1][0]).indexOf(startSymbol) !== -1);
   }
 }

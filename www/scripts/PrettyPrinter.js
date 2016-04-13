@@ -73,7 +73,7 @@ class PrettyPrinter {
       
       leftSideStrings[currentLeftSideString].push(currentRule.rightSide);
     }
-        
+    
     for (let currentLeftSideString in leftSideStrings) {
       // if ({}.hasOwnProperty.call(leftSideStrings, currentLeftSideString)) {
       if (leftSideStrings.hasOwnProperty(currentLeftSideString)) {
@@ -84,7 +84,7 @@ class PrettyPrinter {
         
         let arrowText = document.createTextNode(" -> ");
         ruleSpan.appendChild(arrowText);
-
+        
         let separatorText = document.createTextNode("|");
         let isFirst = true;
         
@@ -103,5 +103,63 @@ class PrettyPrinter {
     }
     
     return ruleSetP;
+  }
+  
+  static pyramidToHtml(pyramid, word) {
+    let pyramidDiv = document.createElement("div");
+    pyramidDiv.classList.add("CYK-pyramid");
+    
+    let separatorText = document.createTextNode(", ");
+    let emptyText = document.createTextNode("∅");
+    
+    for (let currentLevel of pyramid) {
+      let levelDiv = document.createElement("div");
+      levelDiv.classList.add("CYK-pyramid-level");
+      
+      for (let currentCell of currentLevel) {
+        let cellDiv = document.createElement("div");
+        cellDiv.classList.add("CYK-cell");
+        cellDiv.classList.add("CYK-pyramid-cell");
+        
+        if (currentCell.length === 0) {
+          cellDiv.appendChild(emptyText.cloneNode());
+        }
+        
+        let isFirst = true;
+        
+        for (let currentSymbol of currentCell) {
+          if (isFirst) {
+            isFirst = false;
+          } else {
+            cellDiv.appendChild(separatorText.cloneNode());
+          }
+          
+          cellDiv.appendChild(PrettyPrinter.symbolToHTML(currentSymbol));
+        }
+        
+        levelDiv.appendChild(cellDiv);
+      }
+      
+      // pyramidDiv.appendChild(levelDiv);
+      pyramidDiv.insertBefore(levelDiv, pyramidDiv.firstChild);
+    }
+    
+    let levelDiv = document.createElement("div");
+    levelDiv.classList.add("CYK-word-level");
+    
+    for (let character of word) {
+      let cellDiv = document.createElement("div");
+      cellDiv.classList.add("CYK-cell");
+      cellDiv.classList.add("CYK-word-cell");
+      
+      let characterText = document.createTextNode(character);
+      cellDiv.appendChild(characterText);
+      
+      levelDiv.appendChild(cellDiv);
+    }
+    
+    pyramidDiv.appendChild(levelDiv);
+    
+    return pyramidDiv;
   }
 }

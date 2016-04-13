@@ -4,7 +4,9 @@
 class NormalForm {
   static getReachableSymbols(grammar) {
     let reachableSymbols = [];
-    let newReachableSymbols = [grammar[0].leftSide.symbols[0]];
+    
+    // let newReachableSymbols = [grammar[0].leftSide.symbols[0]];
+    let newReachableSymbols = [new GrammaticSymbol("S")];
     
     while (newReachableSymbols.length > 0) {
       let currentRules = [];
