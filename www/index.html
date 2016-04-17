@@ -25,13 +25,14 @@
     <template id="mainContainer" is="dom-bind">
       <div id="container">
         <p>
-          Epsilon: ε
+          Epsilon: <span id="epsilon">ε</span><br />
+          (Drag &amp; drop or copy &amp; paste if from here!)
         </p>
         <paper-textarea id="rulesInput" label="Rules:" value="{{rulesValue}}">
         
         </paper-textarea>
         <paper-input id="wordInput" label="Word:" value="{{wordValue}}" auto-validate pattern="[a-z]*" error-message="Terminal symbols only!"></paper-input>
-        <paper-button id="submitButton" label="Submit" raised>Submit</paper-button>
+        <paper-button id="processButton" label="Process" raised>Process</paper-button>
         <h3 class="toggle">reduced</h3>
         <div class="grammar-box" id="reduced"></div>
         <h3 class="toggle">epsilonFree</h3>

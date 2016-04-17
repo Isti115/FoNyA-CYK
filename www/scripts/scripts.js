@@ -52,7 +52,7 @@ function toggle(e) {
 }
 
 function ready() {
-  mainContainer.$.submitButton.addEventListener("click", process, false);
+  mainContainer.$.processButton.addEventListener("click", process, false);
   
   if (location.hash) {
     let x = parseInt(location.hash.substring(1));
@@ -72,6 +72,8 @@ function removeAllChildren(element) {
   while (element.firstChild) {
     element.removeChild(element.firstChild);
   }
+  
+  element.style.setProperty("height", "0px");
 }
 
 function process() {
@@ -109,24 +111,24 @@ function process() {
   mainContainer.$.lengthReduced.appendChild(PrettyPrinter.ruleSetToDenseHTML(grammar));
   mainContainer.$.lengthReduced.style.setProperty("height", `${padding + lineHeight * mainContainer.$.lengthReduced.firstChild.children.length}px`);
   
+  removeAllChildren(mainContainer.$.pyramid);
+  removeAllChildren(mainContainer.$.deduction);
   if (mainContainer.wordValue) {
     let startSymbol = new GrammaticSymbol("S");
     let pyramid = [];
     let result = CYK.checkDeductibility(grammar, startSymbol, mainContainer.wordValue, pyramid);
     
-    removeAllChildren(mainContainer.$.pyramid);
     mainContainer.$.pyramid.appendChild(PrettyPrinter.pyramidToHtml(pyramid, mainContainer.wordValue));
     mainContainer.$.pyramid.style.setProperty("background-color", result ? "#99ff99" : "#ff9999");
     mainContainer.$.pyramid.style.setProperty("height", `${padding + 26 * mainContainer.$.pyramid.firstChild.children.length}px`);
     
     if (result) {
-      removeAllChildren(mainContainer.$.deduction);
       mainContainer.$.deduction.appendChild(PrettyPrinter.deductionToHTML(startSymbol, pyramid));
       mainContainer.$.deduction.style.setProperty("height", `${padding + 20 * mainContainer.$.deduction.firstChild.children.length}px`);
     }
   }
 }
 
-function validate() {
-  
-}
+// function validate() {
+//
+// }

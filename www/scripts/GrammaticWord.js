@@ -34,7 +34,7 @@ class GrammaticWord {
     return GrammaticWord.equals(this, other);
   }
   
-  // TODO: Change every "symbol.length" to simply "length"
+  // TODO: Change every "symbols.length" to simply "length"
   
   get length() {
     return this.symbols.length;
