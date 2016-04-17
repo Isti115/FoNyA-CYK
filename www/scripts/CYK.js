@@ -1,5 +1,5 @@
 /* exported CYK */
-/* global GrammaticSymbol GrammaticWord */
+/* global GrammaticSymbol DeducedGrammaticSymbol GrammaticWord */
 
 class CYK {
   static getCombinations(a, b) {
@@ -23,7 +23,7 @@ class CYK {
           currentRule.rightSide.equals(currentCombination) &&
           new GrammaticWord(result).indexOf(currentRule.leftSide.symbols[0]) === -1
         ) {
-          result.push(currentRule.leftSide.symbols[0]);
+          result.push(new DeducedGrammaticSymbol(currentRule.leftSide.symbols[0], currentRule, currentCombination.symbols));
         }
       }
     }
@@ -32,7 +32,6 @@ class CYK {
   }
   
   static checkDeductibility(grammar, startSymbol, word, pyramid = []) {
-    // let pyramid = [];
     let level = 0;
     
     pyramid[level] = [];
@@ -41,7 +40,7 @@ class CYK {
       pyramid[level].push(grammar.filter(
         (r) => r.rightSide.symbols.length === 1 &&
         r.rightSide.symbols[0].equals(new GrammaticSymbol(word[i]))
-      ).map((r) => r.leftSide.symbols[0]));
+      ).map((r) => new DeducedGrammaticSymbol(r.leftSide.symbols[0], r, r.rightSide.symbols)));
     }
         
     while (level < word.length - 1) {

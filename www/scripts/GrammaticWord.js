@@ -87,6 +87,16 @@ class GrammaticWord {
     return true;
   }
   
+  getFirstNonTerminalIndex() {
+    for (let i = 0; i < this.symbols.length; i++) {
+      if (!this.symbols[i].isTerminal()) {
+        return i;
+      }
+    }
+    
+    return -1;
+  }
+  
   getNonTerminals() {
     return this.symbols.filter((s) => !s.isTerminal());
   }

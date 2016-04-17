@@ -1,4 +1,4 @@
-/* exported GrammaticSymbol */
+/* exported GrammaticSymbol DeducedGrammaticSymbol*/
 
 class GrammaticSymbol {
   constructor(base, sub = null) {
@@ -36,5 +36,13 @@ class GrammaticSymbol {
     }
     
     return result;
+  }
+}
+
+class DeducedGrammaticSymbol extends GrammaticSymbol {
+  constructor(symbol, rule, results) {
+    super(symbol.base, symbol.sub);
+    this.rule = rule;
+    this.results = results;
   }
 }

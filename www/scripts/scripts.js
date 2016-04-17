@@ -110,12 +110,20 @@ function process() {
   mainContainer.$.lengthReduced.style.setProperty("height", `${padding + lineHeight * mainContainer.$.lengthReduced.firstChild.children.length}px`);
   
   if (mainContainer.wordValue) {
+    let startSymbol = new GrammaticSymbol("S");
     let pyramid = [];
-    let result = CYK.checkDeductibility(grammar, new GrammaticSymbol("S"), mainContainer.wordValue, pyramid);
+    let result = CYK.checkDeductibility(grammar, startSymbol, mainContainer.wordValue, pyramid);
+    
     removeAllChildren(mainContainer.$.pyramid);
     mainContainer.$.pyramid.appendChild(PrettyPrinter.pyramidToHtml(pyramid, mainContainer.wordValue));
     mainContainer.$.pyramid.style.setProperty("background-color", result ? "#99ff99" : "#ff9999");
-    mainContainer.$.pyramid.style.setProperty("height", `${padding + lineHeight * mainContainer.$.pyramid.firstChild.children.length}px`);
+    mainContainer.$.pyramid.style.setProperty("height", `${padding + 26 * mainContainer.$.pyramid.firstChild.children.length}px`);
+    
+    if (result) {
+      removeAllChildren(mainContainer.$.deduction);
+      mainContainer.$.deduction.appendChild(PrettyPrinter.deductionToHTML(startSymbol, pyramid));
+      mainContainer.$.deduction.style.setProperty("height", `${padding + 20 * mainContainer.$.deduction.firstChild.children.length}px`);
+    }
   }
 }
 

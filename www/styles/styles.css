@@ -40,6 +40,8 @@
       margin: 10px;
       padding: 10px;
       
+      font-family: "Consolas";
+      
       border-style: solid;
       border-color: black;
       border-width: 1px;
@@ -90,7 +92,7 @@
 
       margin: 3px;
 
-      width: 50px;
+      width: 70px;
     }
     
     .CYK-pyramid-cell {
@@ -99,5 +101,17 @@
     
     .CYK-word-cell {
       border: solid grey 1px;
+    }
+    
+    #deduction {
+      text-align: center;
+    }
+    
+    #deduction :not(.grammatic-rule) > .grammatic-word {
+      font-weight: bold;
+    }
+    
+    #deduction .grammatic-rule {
+      font-style: italic;
     }
   

@@ -109,7 +109,7 @@ class PrettyPrinter {
     let pyramidDiv = document.createElement("div");
     pyramidDiv.classList.add("CYK-pyramid");
     
-    let separatorText = document.createTextNode(", ");
+    let separatorText = document.createTextNode(",");
     let emptyText = document.createTextNode("∅");
     
     for (let currentLevel of pyramid) {
@@ -161,5 +161,38 @@ class PrettyPrinter {
     pyramidDiv.appendChild(levelDiv);
     
     return pyramidDiv;
+  }
+
+  static deductionToHTML(startSymbol, pyramid) {
+    let deductionP = document.createElement("p");
+    
+    // let separatorText = document.createTextNode(" => ");
+    
+    let deducedStartSymbol = pyramid[pyramid.length - 1][0].filter((s) => s.equals(startSymbol))[0];
+    
+    let currentWord = new GrammaticWord([deducedStartSymbol]);
+    
+    while (!currentWord.isTerminal()) {
+      let currentIndex = currentWord.getFirstNonTerminalIndex();
+      
+      let currentSymbol = currentWord.symbols[currentIndex];
+      
+      deductionP.appendChild(PrettyPrinter.wordToHTML(currentWord));
+      // deductionP.appendChild(separatorText.cloneNode());
+      deductionP.appendChild(PrettyPrinter.ruleToHTML(currentSymbol.rule));
+      console.log(currentSymbol.rule.toString());
+      
+      currentWord.symbols.splice(currentIndex, 1, ...currentSymbol.results);
+    }
+    
+    deductionP.appendChild(PrettyPrinter.wordToHTML(currentWord));
+    
+    // let queue = [deducedStartSymbol];
+    // while (queue.length > 0) {
+    //   let currentSymbol = queue.pop();
+    //
+    // }
+    
+    return deductionP;
   }
 }
